@@ -7,6 +7,15 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "EMPLOYEES")
+@NamedQueries({
+    @NamedQuery(name = "Empleado.findAll", 
+    		    query = "SELECT e FROM Empleado e"),
+    @NamedQuery(name = "Empleado.findByTrabajoId", 
+               query = "SELECT e FROM Empleado e WHERE e.idTrabajo = :idTrabajo"),
+    @NamedQuery(name = "Empleado.findIdNomApByTrabajoId", 
+    query = "SELECT new com.curso.jpa.CursoJPA.domain.Empleado(e.id, e.nombre, e.apellidos) FROM Empleado e WHERE e.idTrabajo = :idTrabajo")
+   
+})
 public class Empleado implements Serializable {
 
 	@Id
@@ -27,17 +36,19 @@ public class Empleado implements Serializable {
 	@Temporal(TemporalType.DATE) // javax.persistence.Temporal
 	@Column(name = "HIRE_DATE")
 	private Date fechaContratacion; // java.util.Date
+	
+	
 
-	@Column(name = "JOB_ID", insertable = false, updatable=false)
-	private String idTrabajo;
+	@Column(name = "JOB_ID")
+	private String idTrabajo;       // USO  PARA INSERTS UPDATES 
 	
 	//@OneToOne
 	//@JoinColumn(name = "JOB_ID")
 	//private Trabajo trabajo;
 	
-	@ManyToOne
-	@JoinColumn(name = "JOB_ID")
-	private Trabajo trabajo;
+	@ManyToOne(fetch = FetchType.EAGER) 
+	@JoinColumn(name = "JOB_ID", insertable = false, updatable = false)
+	private Trabajo trabajo;        //USA SOLO EN SELECTES
 	
 
 	@Column(name = "SALARY")
@@ -51,6 +62,12 @@ public class Empleado implements Serializable {
 
 	public Empleado() {
 		super();
+	}
+	
+	public Empleado(Long id, String nombre, String ape) {
+		this.id = id;
+		this.nombre =nombre;
+		this.apellidos = ape;
 	}
 
 	public Long getId() {
@@ -77,6 +94,12 @@ public class Empleado implements Serializable {
 		this.apellidos = apellidos;
 	}
 
+	public String getIdTrabajo() {
+		return idTrabajo;
+	}
+	public void setIdTrabajo(String idTrabajo) {
+		this.idTrabajo = idTrabajo;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -141,12 +164,7 @@ public class Empleado implements Serializable {
 		this.idDepartamento = idDepartamento;
 	}
 
-	public String getIdTrabajo() {
-		return idTrabajo;
-	}
-	public void setIdTrabajo(String idTrabajo) {
-		this.idTrabajo = idTrabajo;
-	}
+	
 
 	@Override
 	public int hashCode() {

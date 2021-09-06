@@ -20,7 +20,7 @@ public class Trabajo implements Serializable {
 	@Column(name="MAX_SALARY")
 	private Double salarioMax;
 	
-	@OneToMany(mappedBy = "trabajo")
+	@OneToMany(mappedBy = "trabajo",fetch = FetchType.LAZY)
 	private List<Empleado> coleccionEmpleados;
 	
 

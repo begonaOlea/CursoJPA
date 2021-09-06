@@ -28,8 +28,8 @@ public class Empleado implements Serializable {
 	@Column(name = "HIRE_DATE")
 	private Date fechaContratacion; // java.util.Date
 
-	//@Column(name = "JOB_ID")
-	//private String idTrabajo;
+	@Column(name = "JOB_ID", insertable = false, updatable=false)
+	private String idTrabajo;
 	
 	//@OneToOne
 	//@JoinColumn(name = "JOB_ID")
@@ -141,7 +141,12 @@ public class Empleado implements Serializable {
 		this.idDepartamento = idDepartamento;
 	}
 
-	
+	public String getIdTrabajo() {
+		return idTrabajo;
+	}
+	public void setIdTrabajo(String idTrabajo) {
+		this.idTrabajo = idTrabajo;
+	}
 
 	@Override
 	public int hashCode() {

@@ -35,6 +35,7 @@
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 			<property name="javax.persistence.jdbc.user" value="HR" />
 			<property name="javax.persistence.jdbc.password" value="hr" />
+			
 
 			<!-- EclipseLink should create the database schema automatically -->
 			<property name="eclipselink.logging.level" value="FINE"/> 
